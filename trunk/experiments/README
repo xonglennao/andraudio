@@ -1,0 +1,9 @@
+=============================
+Andraudio - Experimental Code
+=============================
+
+This folder is meant to host various android audio experiments. The subfolders
+in here should be considered in alpha/experimental state. Although possible, it 
+is not required that each subfolder contain the conventional trunk, tags etc.. 
+tree. Therefore code can be put directly into experiments/someproject/, and 
+could be moved outside of the experiments tree if it ever gets mature.
