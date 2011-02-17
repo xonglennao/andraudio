@@ -1,0 +1,66 @@
+===================
+libaudio proxy test
+===================
+
+Requirements
+------------
+
+* android ndk r5
+
+* a rooted Android device. An emulator should do too.
+
+* android platform source code. This is the entire AOSP source code
+  checked out with repo. Checking out individual git repositories 
+  is also possible but not tested. 
+  
+Note that the platform source should match the version of Android running 
+on your device. 
+
+For instance, when building for Android 1.6, this can be used to switch
+to the donut branch::
+
+  repo init -u git://android.git.kernel.org/platform/manifest.git -b donut
+  repo sync
+    
+
+Setup
+-----
+
+Copy Makefile.in to Makefile, and adjust the following variables:
+
+- APP_PLATFORM: android target (android-3, android-4, etc..)
+- ANDROID_SRC: path to the complete Android platform source 
+
+Plug the Android device, and then run::
+
+  make libs
+
+This will pull some dynamic libraries from the device and put them
+into system_libs/. This is needed to prevent undefined references
+when linking.
+
+Building and running the test
+-----------------------------
+
+To build, simply type::  
+
+  make
+
+Provided that a device is plugged, the test can be built and run with::
+
+  make launch 
+
+Although not strictly necessary, it may be useful to stop the android 
+media server before lauching the test::
+
+  stop media
+
+By default, the test doesn't use dlopen. To load libaudio with dlopen, 
+add ``DLOPEN=libaudio.so`` when using the ``launch`` rule.
+
+To build for the msm7k target (Google Dev Phone 2, eg: HTC Magic 32B)
+add the ``TARGET=msm7k`` variable (note: this shouldn't be necessary)
+
+Add ``V=1`` for a verbose build, and ``-B`` to rebuild everything.
+
+.. vim: ft=rst:

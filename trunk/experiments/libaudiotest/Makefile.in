@@ -1,0 +1,23 @@
+APP_PLATFORM=android-4
+ANDROID_SRC=/path/to/aosp
+
+.PHONY: proxytest launch libs clean
+
+proxytest:
+	ndk-build
+
+libs:
+	adb pull /system/lib/libutils.so system_libs/
+	adb pull /system/lib/libcutils.so system_libs/
+	adb pull /system/lib/libaudio.so system_libs/
+	adb pull /system/lib/libmedia.so system_libs/
+	adb pull /system/lib/libhardware_legacy.so system_libs/
+
+launch: proxytest
+	adb push libs/armeabi/proxytest /data/local
+	adb shell /data/local/proxytest $(DLOPEN)
+
+clean:
+	ndk-build clean
+	rm system_libs/*.so
+	
