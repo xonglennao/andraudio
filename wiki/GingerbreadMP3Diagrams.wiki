@@ -1,0 +1,25 @@
+#summary Sequence diagrams for MP3 playback on Gingerbread.
+
+= Introduction =
+
+These diagrams attempt to show what happens in a typical case where you play an MP3 stored locally on your device; from the (native) MediaPlayer class and all the way down to AudioHardware. There are 3 diagrams: one showing what happens when you do MediaPlayer::setDataSource; one for MediaPlayer::prepare; and one for MediaPlayer::start.
+
+
+
+= Notes =
+
+  * The diagrams are not 100% complete. If they were they'd be huge. And I considered some things to not be of enough interest to include.
+  * The diagrams are only relevant for Gingerbread and (hopefully) later versions of Android (maybe Froyo as well.. I've never looked much at the Froyo code).
+  * I've tried to double-check almost everything I put into the diagrams to make sure that they are correct, but I'm not ruling out the possibility that there might be some errors still in there.
+  * The blue arrows in the diagrams represent calls to void methods (or method calls where the return value is ignored).
+  * The red, teal and purple colors don't mean anything special. They were just added to make it a bit more clear where a related sequence of calls begins and ends.
+
+
+
+== Diagrams ==
+
+[http://andraudio.googlecode.com/files/gb_mp3_setdatasource.png setDataSource]
+
+[http://andraudio.googlecode.com/files/gb_mp3_prepare.png prepare]
+
+[http://andraudio.googlecode.com/files/gb_mp3_start.png start]
