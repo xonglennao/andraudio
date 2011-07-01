@@ -1,0 +1,40 @@
+#summary A worksheet for hammering out Audio Plugin concepts
+
+= Introduction =
+
+This wiki page is a sloppy worksheet (work in progress) for hammering out the goals and intents of an Audio Plugin system for Android.  It is expected that this will be replaced by a more formalized set of wiki pages.
+
+= Problem Statement =
+
+A system on Android that allows host applications to be extended at runtime by utilizing executable code from 3rd party packages (apps) that are not known a priori.  The host application is in full control of the startup, execution, shutdown, and display of the 3rd party app.  This includes a system of discovering (at run time) the existence of available plugins.  The intent is for audio-specific plugins (PCM audio as well as MIDI and other event protocols). 
+
+= Definitions =
+
+host / host application - The main app that the user is using.  It is in control of all the plugins, session management, and execution.
+
+plugin - A 3rd party app that conforms to the plugin protocol and is capable of being utilized by a host application.
+
+= Prior Art =
+
+Other systems that we can learn from include:
+  * LV2, DSSI, and LADSPA
+  * VST and VSTi
+  * JACK
+  * Rewire
+  * ASIO
+  * GMPI
+
+= Features =
+
+Required:
+  * Zero copy buffers
+
+Would be nice:
+  * plugin sandboxing
+
+Non-features:
+  * Utilization of a 3rd party audio daemon (like jackd, pulseaudio, arts, etc)
+
+= Brainstorming =
+
+Please add your ideas here.
