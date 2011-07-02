@@ -2,6 +2,8 @@
 
 = Native Plugin Packages =
 
+_Note: this is a work in progress. An announce will be posted on [http://music.columbia.edu/mailman/listinfo/andraudio andraudio] when ready._
+
 == Introduction ==
 
 This draft document describes a solution for packaging native plugins, and a
