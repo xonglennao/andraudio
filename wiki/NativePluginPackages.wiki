@@ -104,7 +104,7 @@ Here's how plugin discovery can be performed by a plugin host:
 }}}
 
 In the above example, analyzing the .so files and extracting/parsing the
-metadata are left aside. This is specific to each plugin category.
+metadata are left aside. This is specific to each plugin class.
 
 In order to avoid querying the package manager and inspecting the packages
 and plugins repeatedly, it is recommended that the host caches individual
@@ -116,7 +116,7 @@ Now that the host has discovered and inspected the plugin packages, it can
 load individual plugins.  This is performed easily with dynamic linking,
 using dlopen() on a shared object found in the package library directory
 (`libdir` above). The shared objects are world readable and executable,
-so can be linked at runtime by the external host application without problem.
+so they can be linked at runtime by the external host application without problem.
 
 == TODO ==
 
