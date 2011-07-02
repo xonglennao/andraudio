@@ -122,6 +122,6 @@ so can be linked at runtime by the external host application without problem.
 
 Several aspects are not yet covered:
 
-* *Setup*: a package many need to be set up, especially to show a license and/or copyright when one of its plugin is first loaded
+ * *Setup*: a package many need to be set up, especially to show a license and/or copyright when one of its plugin is first loaded
 
-* *Signatures*: packaging should include a signing step so that hosts can verify the integrity of shared objects, and possibly only load plugins from trusted vendors
+ * *Signatures*: packaging should include a signing step so that hosts can verify the integrity of shared objects, and possibly only load plugins from trusted vendors
