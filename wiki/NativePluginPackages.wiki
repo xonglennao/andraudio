@@ -25,7 +25,7 @@ with the Android NDK are placed under a subdirectory of the Android project,
 and automatically added to the APK when creating a release with ant.
 
 Metadata, such as RDF, XML files, etc...  should be placed into a subdirectory
-of the assets folder. The said folder can be almost anything, but it needs
+of the project assets folder. The said folder can be almost anything, but it needs
 to be standardized for a given class of plugins.
 
 All actual plugin components being packaged, the package must declare
@@ -64,7 +64,7 @@ Here is an complete manifest example:
 
 == Discovery ==
 
-Once an plugin package has been installed, it becomes available for discovery
+Once a plugin package has been installed, it becomes available for discovery
 by host applications.
 
 This discovery mechanism is designed to be lightweight. It doesn't rely on
@@ -107,14 +107,21 @@ In the above example, analyzing the .so files and extracting/parsing the
 metadata are left aside. This is specific to each plugin category.
 
 In order to avoid querying the package manager and inspecting the packages
-and plugins repeatedly, it is recommended that the host cache individual
+and plugins repeatedly, it is recommended that the host caches individual
 package informations until the package version changes.
 
 == Plugin loading ==
 
 Now that the host has discovered and inspected the plugin packages, it can
 load individual plugins.  This is performed easily with dynamic linking,
-using dlopen() on an shared object found in the package library directory
+using dlopen() on a shared object found in the package library directory
 (`libdir` above). The shared objects are world readable and executable,
-which means they can be linked at runtime by the external host application.
+so can be linked at runtime by the external host application without problem.
 
+== TODO ==
+
+Several aspects are not yet covered:
+
+* *Setup*: a package many need to be set up, especially to show a license and/or copyright when one of its plugin is first loaded
+
+* *Signatures*: packaging should include a signing step so that hosts can verify the integrity of shared objects, and possibly only load plugins from trusted vendors
