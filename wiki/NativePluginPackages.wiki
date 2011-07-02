@@ -1,0 +1,120 @@
+#summary Native plugins packaging and discovery
+
+= Native Plugin Packages =
+
+== Introduction ==
+
+This draft document describes a solution for packaging native plugins, and a
+related mechanism for dynamic discovery of plugins by host applications.
+
+It is not specific to a certain field of applications, such as audio. The
+solution described here is meant to provide a generic ground for loading
+plugins provided by a third-party Android package.
+
+== Packaging ==
+
+A native plugin package is standard Android package, that is, an APK file,
+which may contain several plugins.
+
+Native plugins described here always consist in a native .so shared
+object. In addition to shared objects, certain plugin technologies rely on
+(RDF, ...) metadata describing plugin properties and features.
+
+Packaging shared objects is performed very naturally. Shared objects built
+with the Android NDK are placed under a subdirectory of the Android project,
+and automatically added to the APK when creating a release with ant.
+
+Metadata, such as RDF, XML files, etc...  should be placed into a subdirectory
+of the assets folder. The said folder can be almost anything, but it needs
+to be standardized for a given class of plugins.
+
+All actual plugin components being packaged, the package must declare
+itself as a plugin package, to support dynamic discovery. This is done in
+the Application manifest, by using standard Intent filters.
+
+Each plugin package must define an Activity in its manifest, with an Intent
+filter containing the `org.android.plugin.action.ACTION_DISCOVER` action. The
+plugin will generally belong to a specific plugin class, which should be
+specified by adding the relevant category to this intent filter.
+
+Here is an complete manifest example:
+
+{{{
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.foo.bar" android:versionCode="1">
+
+    <uses-sdk android:minSdkVersion="3" />
+    <application android:icon="@drawable/icon" android:label="@string/app_name">
+
+        <!-- The name of the activity is freely chosen -->
+        <activity android:name=".PluginActivity">
+            <intent-filter>
+                <!-- Required: --> 
+                <action android:name="org.android.plugin.action.ACTION_DISCOVER" />
+
+                <!-- An imaginary plugin category (add more categories if needed): -->
+                <category android:name="org.foo.bar.category.EXAMPLE" />
+            </intent-filter>
+        </activity>                
+    </application>
+
+</manifest>
+}}}
+
+== Discovery ==
+
+Once an plugin package has been installed, it becomes available for discovery
+by host applications.
+
+This discovery mechanism is designed to be lightweight. It doesn't rely on
+each plugin package to provide a Service or !BroadcastReceiver which would
+start and reply whenever a host initiates discovery. Indeed, if many packages
+are installed, this could result in a lot of processes being started.
+
+The mechanism relies on the simple informations provided in the plugin
+manifest.  This is performed by using the !PackageManager and standard
+Android intent matching.
+
+Here's how plugin discovery can be performed by a plugin host:
+
+{{{
+    Intent intent = new Intent("org.android.plugin.action.ACTION_DISCOVER");
+
+    // optional, add one or more plugin categories:
+    intent.addCategory("org.foo.bar.category.EXAMPLE");
+
+    // Find the plugin packages:
+    PackageManager manager = getPackageManager();
+    List<ResolveInfo> matches = manager.queryIntentActivities(intent, 0);
+
+    for (ResolveInfo info: matches) {
+        ApplicationInfo application = info.activityInfo.applicationInfo;
+
+        // Retrieve the package version code
+        int version = manager.getPackageInfo(application.packageName).versionCode;
+
+        // Find the directory where .so files are located:
+        File libdir = new File(application.dataDir, "lib");
+
+        // Retrieve the asset manager to extract and parse metadata:
+        Resources res = manager.getResourcesForApplication(application);
+        AssetManager assets = res.getAssets();
+    }
+}}}
+
+In the above example, analyzing the .so files and extracting/parsing the
+metadata are left aside. This is specific to each plugin category.
+
+In order to avoid querying the package manager and inspecting the packages
+and plugins repeatedly, it is recommended that the host cache individual
+package informations until the package version changes.
+
+== Plugin loading ==
+
+Now that the host has discovered and inspected the plugin packages, it can
+load individual plugins.  This is performed easily with dynamic linking,
+using dlopen() on an shared object found in the package library directory
+(`libdir` above). The shared objects are world readable and executable,
+which means they can be linked at runtime by the external host application.
+
