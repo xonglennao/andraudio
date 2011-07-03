@@ -88,6 +88,8 @@ Android intent matching.
 Here's how plugin discovery can be performed by a plugin host which only
 wants LV2 plugins:
 
+_Warning: needs testing_
+
 {{{
     Intent intent = new Intent("org.andraudio.plugin.action.ACTION_DISCOVER");
 
