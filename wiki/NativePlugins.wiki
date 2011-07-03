@@ -188,5 +188,5 @@ write to permanent storage, delete files, etc..
 A such plugin connector is however out of the scope of the present
 document. The details of its implementation, host/connector IPC,
 etc.. are host-specific. But it is mentioned to show that a certain
-degree of security can be achieved while loading native plugins.
+degree of security can be achieved while running native plugins.
 
