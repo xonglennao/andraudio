@@ -133,7 +133,7 @@ do not rely on any metadata file (eg: VST), and the host needs to link the share
 object to inspect the plugin.
 
 Such dynamic linking, for either inspection or execution purpose, is
-performed easily, using dlopen() on a shared object found in the package
+easily performed, using dlopen() on a shared object found in the package
 library directory (`libdir` above). The shared objects are world readable
 and executable, so they can be linked at runtime by the external host
 application without problem.
