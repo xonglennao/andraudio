@@ -1,17 +1,22 @@
 #summary Native plugins packaging and discovery
 
-= Native Plugin Packages =
+= Native Audio Plugins =
 
 _Note: this is a work in progress. An announce will be posted on [http://music.columbia.edu/mailman/listinfo/andraudio andraudio] when ready._
 
 == Introduction ==
 
-This draft document describes a solution for packaging native plugins, and a
-related mechanism for dynamic discovery of plugins by host applications.
+This draft document describes a possible solution for bringing native
+audio plugins to the Android platform.  A mechanism for plugin packaging
+and discovery is proposed, so that host applications can dynamically
+discover which plugins are installed, and load them as appropriate.
 
-It is not specific to a certain field of applications, such as audio. The
-solution described here is meant to provide a generic ground for loading
-plugins provided by a third-party Android package.
+This approach is especially suited for plugins which rely on well
+established technologies, such as LV2, LADSPA, VST, or VAMP, and which
+do not provide any user interface by themselves (or can operate without
+the user interface that they provide). It is responsibility of the host
+to build user interface dynamically based on the control ports exposed
+by plugins.
 
 == Packaging ==
 
@@ -19,32 +24,34 @@ A native plugin package is standard Android package, that is, an APK file,
 which may contain several plugins.
 
 Native plugins described here always consist in a native .so shared
-object. In addition to shared objects, certain plugin technologies rely on
-(RDF, ...) metadata describing plugin properties and features.
+object. In addition to shared objects, certain plugin technologies such
+LV2 rely on (RDF, ...) metadata describing plugin properties and features.
 
-Packaging shared objects is performed very naturally. Shared objects built
-with the Android NDK are placed under a subdirectory of the Android project,
-and automatically added to the APK when creating a release with ant.
+Packaging shared objects is performed very naturally. Shared objects
+built with the Android NDK are placed under a subdirectory of the
+Android project, and automatically added to the APK when creating a
+release with ant.
 
-Metadata, such as RDF, XML files, etc...  should be placed into a subdirectory
-of the project assets folder. The said folder can be almost anything, but it needs
-to be standardized for a given class of plugins.
+Metadata, such as RDF files, should be placed into a subdirectory of
+the project assets folder. The said folder can be almost anything,
+but it needs to be standardized for a given plugin technology.
 
 All actual plugin components being packaged, the package must declare
-itself as a plugin package, to support dynamic discovery. This is done in
-the Application manifest, by using standard Intent filters.
+itself as a plugin package, to support dynamic discovery. This is done
+in the Application manifest, by using standard Intent filters.
 
-Each plugin package must define an Activity in its manifest, with an Intent
-filter containing the `org.android.plugin.action.ACTION_DISCOVER` action. The
-plugin will generally belong to a specific plugin class, which should be
-specified by adding the relevant category to this intent filter.
+Each plugin package must define an Activity in its manifest, with an
+Intent filter containing the `org.andraudio.plugin.action.ACTION_DISCOVER`
+action. The plugin technologies must be specified by adding the relevant
+categories to this intent filter.
 
-Here is an complete manifest example:
+Here is an complete manifest example for a package providing both LV2
+and VST plugins:
 
 {{{
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.foo.bar" android:versionCode="1">
+    package="org.rock.and.roll" android:versionCode="1">
 
     <uses-sdk android:minSdkVersion="3" />
     <application android:icon="@drawable/icon" android:label="@string/app_name">
@@ -52,11 +59,12 @@ Here is an complete manifest example:
         <!-- The name of the activity is freely chosen -->
         <activity android:name=".PluginActivity">
             <intent-filter>
-                <!-- Required: --> 
-                <action android:name="org.android.plugin.action.ACTION_DISCOVER" />
+                <!-- ACTION_DISCOVER is Required --> 
+                <action android:name="org.andraudio.plugin.action.ACTION_DISCOVER" />
 
-                <!-- An imaginary plugin category (add more categories if needed): -->
-                <category android:name="org.foo.bar.category.EXAMPLE" />
+                <!-- Specify plugin technologies as categories -->
+                <category android:name="org.andraudio.plugin.category.LV2" />
+                <category android:name="org.andraudio.plugin.category.VST" />
             </intent-filter>
         </activity>                
     </application>
@@ -66,25 +74,27 @@ Here is an complete manifest example:
 
 == Discovery ==
 
-Once a plugin package has been installed, it becomes available for discovery
-by host applications.
+Once a plugin package has been installed, it becomes available for
+discovery by host applications.
 
-This discovery mechanism is designed to be lightweight. It doesn't rely on
-each plugin package to provide a Service or !BroadcastReceiver which would
-start and reply whenever a host initiates discovery. Indeed, if many packages
-are installed, this could result in a lot of processes being started.
+This discovery mechanism is designed to be lightweight. It doesn't rely
+on each plugin package to provide a Service or !BroadcastReceiver which
+would start and reply whenever a host initiates discovery. Indeed, if
+many packages are installed, this could result in a lot of processes
+being started.
 
-The mechanism relies on the simple informations provided in the plugin
-manifest.  This is performed by using the !PackageManager and standard
+The mechanism largely relies on the simple informations provided in the plugin
+manifest, which are processed by using the !PackageManager and standard
 Android intent matching.
 
-Here's how plugin discovery can be performed by a plugin host:
+Here's how plugin discovery can be performed by a plugin host which only
+wants LV2 plugins:
 
 {{{
-    Intent intent = new Intent("org.android.plugin.action.ACTION_DISCOVER");
+    Intent intent = new Intent("org.andraudio.plugin.action.ACTION_DISCOVER");
 
     // optional, add one or more plugin categories:
-    intent.addCategory("org.foo.bar.category.EXAMPLE");
+    intent.addCategory("org.andraudio.plugin.category.LV2");
 
     // Find the plugin packages:
     PackageManager manager = getPackageManager();
@@ -102,28 +112,81 @@ Here's how plugin discovery can be performed by a plugin host:
         // Retrieve the asset manager to extract and parse metadata:
         Resources res = manager.getResourcesForApplication(application);
         AssetManager assets = res.getAssets();
+        String metafiles = assets.list("org.andraudio.plugin/lv2/metadata");
     }
 }}}
 
-In the above example, analyzing the .so files and extracting/parsing the
-metadata are left aside. This is specific to each plugin class.
+In the above example, extracting/parsing the metadata is left aside.
+This is specific to the plugin technology (LV2 here). Certain technologies
+do not rely on any metadata file (eg: VST), and the host needs to link the shared
+object to inspect the plugin.
 
-In order to avoid querying the package manager and inspecting the packages
-and plugins repeatedly, it is recommended that the host caches individual
-package informations until the package version changes.
+Such dynamic linking, for either inspection or execution purpose, is
+performed easily, using dlopen() on a shared object found in the package
+library directory (`libdir` above). The shared objects are world readable
+and executable, so they can be linked at runtime by the external host
+application without problem.
 
-== Plugin loading ==
+Note: In order to avoid querying the package manager and inspecting the
+packages and plugins repeatedly, it is recommended that the host caches
+individual package informations until the package version changes.
 
-Now that the host has discovered and inspected the plugin packages, it can
-load individual plugins.  This is performed easily with dynamic linking,
-using dlopen() on a shared object found in the package library directory
-(`libdir` above). The shared objects are world readable and executable,
-so they can be linked at runtime by the external host application without problem.
+== Plugin technologies ==
 
-== TODO ==
+Here are the currently supported plugin technologies.
 
-Several aspects are not yet covered:
+=== LV2 ===
 
- * *Setup*: a package many need to be set up, especially to show a license and/or copyright when one of its plugin is first loaded
+Intent filter category: `org.andraudio.plugin.category.LV2`
 
- * *Signatures*: packaging should include a signing step so that hosts can verify the integrity of shared objects, and possibly only load plugins from trusted vendors
+Metadata asset folder: `org.andraudio.plugin/lv2/metadata/`
+
+=== LADSPA ===
+
+Intent filter category: `org.andraudio.plugin.category.LADSPA`
+
+Metadata asset folder: `org.andraudio.plugin/ladspa/metadata/`
+
+=== VST ===
+
+Intent filter category: `org.andraudio.plugin.category.VST`
+
+org.andraudio.plugin.category.VST
+
+=== VAMP ===
+
+org.andraudio.plugin.category.VAMP
+
+== Discussion ==
+
+=== Setup ===
+
+Certain packages may need to be set up before some of their plugins can
+be loaded by a host. This is especially useful to show a license and/or
+copyright notice when one of the provided plugins is first loaded. This
+is not covered yet.
+
+=== Signature ===
+
+Packaging may include a signing step so that hosts can verify the
+integrity of shared objects, and possibly only load plugins from trusted
+vendors. This is not covered yet.
+
+=== Sandboxing ====
+
+A host which loads a plugin runs a third-party executable in its own process
+and therefore under its own user ID (each Android app is assigned a
+specific user ID). This can represent certain risks.
+
+But sandboxing plugins is possible to a certain extent. Indeed, a given
+host applications could rely on an additional application to interact
+with plugins. And this later application, the plugin connector, can
+have very little Android permissions, if any. In practice this makes it
+possible to forbid loaded plugins to connect to the Internent, to
+write to permanent storage, delete files, etc..
+
+A such plugin connector is however out of the scope of the present
+document. The details of its implementation, host/connector IPC,
+etc.. are host-specific. But it is mentioned to show that a certain
+degree of security can be achieved while loading native plugins.
+
