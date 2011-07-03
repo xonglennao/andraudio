@@ -1,8 +1,6 @@
-#summary Native plugins packaging and discovery
+#summary Native Audio Plugins draft specification
 
 = Native Audio Plugins =
-
-_Note: this is a work in progress. An announce will be posted on [http://music.columbia.edu/mailman/listinfo/andraudio andraudio] when ready._
 
 == Introduction ==
 
