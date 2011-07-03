@@ -88,12 +88,10 @@ Android intent matching.
 Here's how plugin discovery can be performed by a plugin host which only
 wants LV2 plugins:
 
-_Warning: needs testing_
-
 {{{
     Intent intent = new Intent("org.andraudio.plugin.action.DISCOVER");
 
-    // optional, add one or more plugin categories:
+    // optional, restrict search to a plugin technology category:
     intent.addCategory("org.andraudio.plugin.category.LV2");
 
     // Find the plugin packages:
@@ -101,18 +99,31 @@ _Warning: needs testing_
     List<ResolveInfo> matches = manager.queryIntentActivities(intent, 0);
 
     for (ResolveInfo info: matches) {
-        ApplicationInfo application = info.activityInfo.applicationInfo;
+        try {
+            ApplicationInfo application = info.activityInfo.applicationInfo;
 
-        // Retrieve the package version code
-        int version = manager.getPackageInfo(application.packageName).versionCode;
+            // Retrieve the package version code
+            int version = manager.getPackageInfo(application.packageName, 0).versionCode;
 
-        // Find the directory where .so files are located:
-        File libdir = new File(application.dataDir, "lib");
+            // Find the directory where .so files are located:
+            File libdir = new File(application.dataDir, "lib");
 
-        // Retrieve the asset manager to extract and parse metadata:
-        Resources res = manager.getResourcesForApplication(application);
-        AssetManager assets = res.getAssets();
-        String filenames[] = assets.list("org.andraudio.plugin/lv2/metadata");
+            // Retrieve the asset manager and find metadata files:
+            Resources res = manager.getResourcesForApplication(application);
+            AssetManager assets = res.getAssets();
+
+            String entries[] = assets.list("org.andraudio.plugin/lv2/metadata");
+            for (String filename: entries) {
+                // Open a metadata file:
+                InputStream stream = assets.open("org.andraudio.plugin/lv2/metadata/" + filename);
+                // Parse metadata...
+                stream.close();
+            }
+        } catch (IOException e) {
+            // Failed to list/read metadata assets
+        } catch (NameNotFoundException &) {
+            // Package not found. Not supposed to happen.
+        }
     }
 }}}
 
