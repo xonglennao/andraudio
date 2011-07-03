@@ -182,7 +182,7 @@ But sandboxing plugins is possible to a certain extent. Indeed, a given
 host applications could rely on an additional application to interact
 with plugins. And this later application, the plugin connector, can
 have very little Android permissions, if any. In practice this makes it
-possible to forbid loaded plugins to connect to the Internent, to
+possible to forbid loaded plugins to connect to the Internet, to
 write to permanent storage, delete files, etc..
 
 A such plugin connector is however out of the scope of the present
