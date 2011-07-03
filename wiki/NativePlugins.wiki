@@ -31,8 +31,9 @@ Android project, and automatically added to the APK when creating a
 release with ant.
 
 Metadata, such as RDF files, should be placed into a subdirectory of
-the project assets folder. The said folder can be almost anything,
-but it needs to be standardized for a given plugin technology.
+the project assets folder. The said folder should always be a subfolder
+of `org.andraudio.plugin/` and needs to be standardized for a given 
+plugin technology.
 
 All actual plugin components being packaged, the package must declare
 itself as a plugin package, to support dynamic discovery. This is done
