@@ -39,7 +39,7 @@ itself as a plugin package, to support dynamic discovery. This is done
 in the Application manifest, by using standard Intent filters.
 
 Each plugin package must define an Activity in its manifest, with an
-Intent filter containing the `org.andraudio.plugin.action.ACTION_DISCOVER`
+Intent filter containing the `org.andraudio.plugin.action.DISCOVER`
 action. The plugin technologies must be specified by adding the relevant
 categories to this intent filter.
 
@@ -57,8 +57,7 @@ and VST plugins:
         <!-- The name of the activity is freely chosen -->
         <activity android:name=".PluginActivity">
             <intent-filter>
-                <!-- ACTION_DISCOVER is Required --> 
-                <action android:name="org.andraudio.plugin.action.ACTION_DISCOVER" />
+                <action android:name="org.andraudio.plugin.action.DISCOVER" />
 
                 <!-- Specify plugin technologies as categories -->
                 <category android:name="org.andraudio.plugin.category.LV2" />
@@ -91,7 +90,7 @@ wants LV2 plugins:
 _Warning: needs testing_
 
 {{{
-    Intent intent = new Intent("org.andraudio.plugin.action.ACTION_DISCOVER");
+    Intent intent = new Intent("org.andraudio.plugin.action.DISCOVER");
 
     // optional, add one or more plugin categories:
     intent.addCategory("org.andraudio.plugin.category.LV2");
