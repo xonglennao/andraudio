@@ -24,6 +24,9 @@ Other systems that we can learn from include:
   * ASIO
   * GMPI
 
+Please also see NativePlugins which describes a possible solution for
+direct packaging and discovery of native plugins.
+
 = Features =
 
 Required:
