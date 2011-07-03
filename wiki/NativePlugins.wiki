@@ -35,7 +35,7 @@ Metadata, such as RDF files, should be placed into a subdirectory of
 the project assets folder. The said folder should always be a subfolder
 of `org.andraudio.plugin/` and needs to be standardized for a given 
 plugin technology. After installation, the files can be accessed using 
-the AssetManager (the files are not extracted automatically).
+the !AssetManager (the files are not extracted automatically).
 
 All actual plugin components being packaged, the package must declare
 itself as a plugin package, to support dynamic discovery. This is done
