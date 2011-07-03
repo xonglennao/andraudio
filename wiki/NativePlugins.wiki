@@ -134,26 +134,26 @@ individual package informations until the package version changes.
 Here are the currently supported plugin technologies.
 
 === LV2 ===
-
-Intent filter category: `org.andraudio.plugin.category.LV2`
-
-Metadata asset folder: `org.andraudio.plugin/lv2/metadata/`
+ 
+ * Information: http://lv2plug.in/ 
+ * Intent filter category: `org.andraudio.plugin.category.LV2`
+ * Metadata asset folder: `org.andraudio.plugin/lv2/metadata/`
 
 === LADSPA ===
 
-Intent filter category: `org.andraudio.plugin.category.LADSPA`
-
-Metadata asset folder: `org.andraudio.plugin/ladspa/metadata/`
+ * Information: http://www.ladspa.org/
+ * Intent filter category: `org.andraudio.plugin.category.LADSPA`
+ * Metadata asset folder: `org.andraudio.plugin/ladspa/metadata/`
 
 === VST ===
 
-Intent filter category: `org.andraudio.plugin.category.VST`
-
-org.andraudio.plugin.category.VST
+ * Information: http://ygrabit.steinberg.de/ 
+ * Intent filter category: `org.andraudio.plugin.category.VST`
 
 === VAMP ===
 
-org.andraudio.plugin.category.VAMP
+ * Information: http://www.vamp-plugins.org/
+ * Intent filter category: `org.andraudio.plugin.category.VAMP`
 
 == Discussion ==
 
