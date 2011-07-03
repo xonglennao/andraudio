@@ -18,7 +18,7 @@ by plugins.
 
 == Packaging ==
 
-A native plugin package is standard Android package, that is, an APK file,
+A native plugin package is a standard Android package, that is, an APK file,
 which may contain several plugins.
 
 Native plugins described here always consist in a native .so shared
@@ -28,12 +28,14 @@ LV2 rely on (RDF, ...) metadata describing plugin properties and features.
 Packaging shared objects is performed very naturally. Shared objects
 built with the Android NDK are placed under a subdirectory of the
 Android project, and automatically added to the APK when creating a
-release with ant.
+release with ant. Upon installation of the package, the shared objects
+are automatically extracted to the application data directory.
 
 Metadata, such as RDF files, should be placed into a subdirectory of
 the project assets folder. The said folder should always be a subfolder
 of `org.andraudio.plugin/` and needs to be standardized for a given 
-plugin technology.
+plugin technology. After installation, the files can be accessed using 
+the AssetManager (the files are not extracted automatically).
 
 All actual plugin components being packaged, the package must declare
 itself as a plugin package, to support dynamic discovery. This is done
