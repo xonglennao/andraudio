@@ -101,30 +101,24 @@ wants LV2 plugins:
     List<ResolveInfo> matches = manager.queryIntentActivities(intent, 0);
 
     for (ResolveInfo info: matches) {
-        try {
-            ApplicationInfo application = info.activityInfo.applicationInfo;
+        ApplicationInfo application = info.activityInfo.applicationInfo;
 
-            // Retrieve the package version code
-            int version = manager.getPackageInfo(application.packageName, 0).versionCode;
+        // Retrieve the package version code
+        int version = manager.getPackageInfo(application.packageName, 0).versionCode;
 
-            // Find the directory where .so files are located:
-            File libdir = new File(application.dataDir, "lib");
+        // Find the directory where .so files are located:
+        File libdir = new File(application.dataDir, "lib");
 
-            // Retrieve the asset manager and find metadata files:
-            Resources res = manager.getResourcesForApplication(application);
-            AssetManager assets = res.getAssets();
+        // Retrieve the asset manager and find metadata files:
+        Resources res = manager.getResourcesForApplication(application);
+        AssetManager assets = res.getAssets();
 
-            String entries[] = assets.list("org.andraudio.plugin/lv2/metadata");
-            for (String filename: entries) {
-                // Open a metadata file:
-                InputStream stream = assets.open("org.andraudio.plugin/lv2/metadata/" + filename);
-                // Parse metadata...
-                stream.close();
-            }
-        } catch (IOException e) {
-            // Failed to list/read metadata assets
-        } catch (NameNotFoundException &) {
-            // Package not found. Not supposed to happen.
+        String entries[] = assets.list("org.andraudio.plugin/lv2/metadata");
+        for (String filename: entries) {
+            // Open a metadata file:
+            InputStream stream = assets.open("org.andraudio.plugin/lv2/metadata/" + filename);
+            // Parse metadata...
+            stream.close();
         }
     }
 }}}
