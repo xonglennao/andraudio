@@ -110,7 +110,7 @@ wants LV2 plugins:
         // Retrieve the asset manager to extract and parse metadata:
         Resources res = manager.getResourcesForApplication(application);
         AssetManager assets = res.getAssets();
-        String metafiles = assets.list("org.andraudio.plugin/lv2/metadata");
+        String filenames[] = assets.list("org.andraudio.plugin/lv2/metadata");
     }
 }}}
 
