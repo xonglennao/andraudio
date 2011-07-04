@@ -47,7 +47,7 @@ action. The plugin technologies must be specified by adding the relevant
 categories to this intent filter.
 
 Here is an complete manifest example for a package providing both LV2
-and VST plugins:
+and LADSPA plugins:
 
 {{{
 <?xml version="1.0" encoding="utf-8"?>
@@ -64,7 +64,7 @@ and VST plugins:
 
                 <!-- Specify plugin technologies as categories -->
                 <category android:name="org.andraudio.plugin.category.LV2" />
-                <category android:name="org.andraudio.plugin.category.VST" />
+                <category android:name="org.andraudio.plugin.category.LADSPA" />
             </intent-filter>
         </activity>                
     </application>
@@ -91,48 +91,48 @@ Here's how plugin discovery can be performed by a plugin host which only
 wants LV2 plugins:
 
 {{{
-    Intent intent = new Intent("org.andraudio.plugin.action.DISCOVER");
+Intent intent = new Intent("org.andraudio.plugin.action.DISCOVER");
 
-    // optional, restrict search to a plugin technology category:
-    intent.addCategory("org.andraudio.plugin.category.LV2");
+// optional, restrict search to a plugin technology category:
+intent.addCategory("org.andraudio.plugin.category.LV2");
 
-    // Find the plugin packages:
-    PackageManager manager = getPackageManager();
-    List<ResolveInfo> matches = manager.queryIntentActivities(intent, 0);
+// Find the plugin packages:
+PackageManager manager = getPackageManager();
+List<ResolveInfo> matches = manager.queryIntentActivities(intent, 0);
 
-    for (ResolveInfo info: matches) {
-        ApplicationInfo application = info.activityInfo.applicationInfo;
+for (ResolveInfo info: matches) {
+    ApplicationInfo application = info.activityInfo.applicationInfo;
 
-        // Retrieve the package version code
-        int version = manager.getPackageInfo(application.packageName, 0).versionCode;
+    // Retrieve the package version code
+    int version = manager.getPackageInfo(application.packageName, 0).versionCode;
 
-        // Find the directory where .so files are located:
-        File libdir = new File(application.dataDir, "lib");
+    // Find the directory where .so files are located:
+    File libdir = new File(application.dataDir, "lib");
 
-        // Retrieve the asset manager and find metadata files:
-        Resources res = manager.getResourcesForApplication(application);
-        AssetManager assets = res.getAssets();
+    // Retrieve the asset manager and find metadata files:
+    Resources res = manager.getResourcesForApplication(application);
+    AssetManager assets = res.getAssets();
 
-        String entries[] = assets.list("org.andraudio.plugin/lv2/metadata");
-        for (String filename: entries) {
-            // Open a metadata file:
-            InputStream stream = assets.open("org.andraudio.plugin/lv2/metadata/" + filename);
-            // Parse metadata...
-            stream.close();
-        }
+    String entries[] = assets.list("org.andraudio.plugin/lv2/metadata");
+    for (String filename: entries) {
+        // Open a metadata file:
+        InputStream stream = assets.open("org.andraudio.plugin/lv2/metadata/" + filename);
+        // Parse metadata...
+        stream.close();
     }
+}
 }}}
 
-In the above example, extracting/parsing the metadata is left aside.
+In the above example, parsing the metadata is left aside.
 This is specific to the plugin technology (LV2 here). Certain technologies
-do not rely on any metadata file (eg: VST), and the host needs to link the shared
-object to inspect the plugin.
+do not rely on any metadata file (eg: VST), and the host needs to link
+the shared object to inspect the plugin.
 
 Such dynamic linking, for either inspection or execution purpose, is
-easily performed, using dlopen() on a shared object found in the package
-library directory (`libdir` above). The shared objects are world readable
-and executable, so they can be linked at runtime by the external host
-application without problem.
+easily performed, using `dlopen()` on a shared object found in the package
+library directory (`libdir` above). The installed shared objects are
+always world readable and executable, so they can be linked at runtime
+by the external host application without problem.
 
 Note: In order to avoid querying the package manager and inspecting the
 packages and plugins repeatedly, it is recommended that the host caches
@@ -158,6 +158,7 @@ Here are the currently supported plugin technologies.
 
  * Information: http://ygrabit.steinberg.de/ 
  * Intent filter category: `org.andraudio.plugin.category.VST`
+ * _Warning: the feasibility of native Android VST plugins needs confirmation (native Linux VST plugins are possible)_
 
 === VAMP ===
 
@@ -187,7 +188,7 @@ specific user ID). This can represent certain risks.
 
 But sandboxing plugins is possible to a certain extent. Indeed, a given
 host applications could rely on an additional application to interact
-with plugins. And this later application, the plugin connector, can
+with plugins. And this later application, the _plugin connector_, can
 have very little Android permissions, if any. In practice this makes it
 possible to forbid loaded plugins to connect to the Internet, to
 write to permanent storage, delete files, etc..
