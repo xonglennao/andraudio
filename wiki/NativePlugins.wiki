@@ -1,4 +1,4 @@
-#summary Native Audio Plugins draft specification
+#summary Native Audio Plugins packaging and discovery
 
 = Native Audio Plugins =
 
