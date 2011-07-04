@@ -4,7 +4,7 @@
 
 == Introduction ==
 
-This draft document describes a possible solution for bringing native
+This document describes a possible solution for bringing native
 audio plugins to the Android platform.  A mechanism for plugin packaging
 and discovery is proposed, so that host applications can dynamically
 discover which plugins are installed, and load them as appropriate.
