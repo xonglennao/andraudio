@@ -2,7 +2,7 @@
 
 = Introduction =
 
-These diagrams attempt to show what happens in a typical case where you play an MP3 stored locally on your device; from the (native) MediaPlayer class and all the way down to AudioHardware. There are 3 diagrams: one showing what happens when you do MediaPlayer::setDataSource; one for MediaPlayer::prepare; and one for MediaPlayer::start.
+These diagrams attempt to show what happens in a typical case where you play an MP3 stored locally on your device; from the (native) `MediaPlayer` class and all the way down to `AudioHardware`. There are 3 diagrams: one showing what happens when you do `MediaPlayer::setDataSource;` one for `MediaPlayer::prepare;` and one for `MediaPlayer::start`.
 
 
 
@@ -17,6 +17,8 @@ These diagrams attempt to show what happens in a typical case where you play an 
 
 
 == Diagrams ==
+
+=== setDataSource ===
 
 [http://andraudio.googlecode.com/files/gb_mp3_setdatasource.png setDataSource]
 
