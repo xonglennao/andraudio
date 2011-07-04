@@ -18,8 +18,20 @@ These diagrams attempt to show what happens in a typical case where you play an 
 
 == Diagrams ==
 
-[http://andraudio.googlecode.com/files/gb_mp3_setdatasource.png setDataSource]
+=== setDataSource ===
 
-[http://andraudio.googlecode.com/files/gb_mp3_prepare.png prepare]
+<a href="http://andraudio.googlecode.com/files/gb_mp3_setdatasource.png" >
+http://andraudio.googlecode.com/files/gb_mp3_setdatasource.png
+</a>
 
-[http://andraudio.googlecode.com/files/gb_mp3_start.png start]
+=== prepare ===
+
+<a href="http://andraudio.googlecode.com/files/gb_mp3_prepare.png" > 
+http://andraudio.googlecode.com/files/gb_mp3_prepare.png
+</a>
+
+=== start ===
+
+<a href="http://andraudio.googlecode.com/files/gb_mp3_start.png">
+http://andraudio.googlecode.com/files/gb_mp3_start.png
+</a>
