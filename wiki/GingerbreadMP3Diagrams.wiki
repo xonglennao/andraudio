@@ -18,8 +18,6 @@ These diagrams attempt to show what happens in a typical case where you play an 
 
 == Diagrams ==
 
-=== setDataSource ===
-
 [http://andraudio.googlecode.com/files/gb_mp3_setdatasource.png setDataSource]
 
 [http://andraudio.googlecode.com/files/gb_mp3_prepare.png prepare]
