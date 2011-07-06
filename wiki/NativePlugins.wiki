@@ -107,7 +107,7 @@ for (ResolveInfo info: matches) {
     int version = manager.getPackageInfo(application.packageName, 0).versionCode;
 
     // Find the directory where .so files are located:
-    File libdir = new File(application.dataDir, "lib");
+    String libdir = getApplicationLibraryDir(application);
 
     // Retrieve the asset manager and find metadata files:
     Resources res = manager.getResourcesForApplication(application);
@@ -123,6 +123,28 @@ for (ResolveInfo info: matches) {
 }
 }}}
 
+Where `getApplicationLibraryDir()` is defined as:
+
+{{{
+String getApplicationLibraryDir(ApplicationInfo application) {    
+    String libdir = null;
+    try {
+        // Starting from Android 2.3, nativeLibraryDir is available:
+        Field field = ApplicationInfo.class.getField("nativeLibraryDir");
+        libdir = (String) field.get(application);
+    } catch (SecurityException e1) {
+    } catch (NoSuchFieldException e1) {
+    } catch (IllegalArgumentException e) {
+    } catch (IllegalAccessException e) {
+    }
+    if (libdir == null) {
+        // Fallback for Android < 2.3:
+        libdir = application.dataDir + "/lib";
+    }
+    return libdir;
+}
+}}}
+
 In the above example, parsing the metadata is left aside.
 This is specific to the plugin technology (LV2 here). Certain technologies
 do not rely on any metadata file (eg: VST), and the host needs to link
@@ -132,9 +154,9 @@ Such dynamic linking, for either inspection or execution purpose, is
 easily performed, using `dlopen()` on a shared object found in the package
 library directory (`libdir` above). The installed shared objects are
 always world readable and executable, so they can be linked at runtime
-by the external host application without problem.
+by the external host application without problem (the reliability of this has been [http://groups.google.com/group/android-ndk/msg/05aae4aafb266cf1 confirmed on android-ndk]).
 
-Note: In order to avoid querying the package manager and inspecting the
+Note: In order to avoid inspecting the
 packages and plugins repeatedly, it is recommended that the host caches
 individual package informations until the package version changes.
 
@@ -197,4 +219,3 @@ A such plugin connector is however out of the scope of the present
 document. The details of its implementation, host/connector IPC,
 etc.. are host-specific. But it is mentioned to show that a certain
 degree of security can be achieved while running native plugins.
-
