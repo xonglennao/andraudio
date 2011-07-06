@@ -41,3 +41,20 @@ Non-features:
 = Brainstorming =
 
 Please add your ideas here.
+
+= Breaking it down =
+
+A plugin generally has these things that need to be solved:
+
+  * Discovery (how the plugin is discovered by host applications)
+  * Metadata (info about the plugin and what it does)
+  * Loading (loading the executable into memory for use by host application).  This is usually broken down into:
+    * Instantiation (alloc. memory, etc)
+    * Activation (initialize plugin for use)
+    * Port/Control connections (getting data to/from plugin)
+    * Running (telling the plugin when to run its main code)
+    * Deactivation (de-initialize plugin, possibly for re-use)
+    * Cleanup (Totally delete the object)
+  * Installation (Where the plugin's assets are installed, and how they can be re-discovered by the plugin itself).
+  * Packaging (How the plugin is delivered)
+  * UI's (a plugin-supplied UI, how it's presented and how it interacts with the plugin itself).
