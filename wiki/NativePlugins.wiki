@@ -39,7 +39,7 @@ the !AssetManager (the files are not extracted automatically).
 
 All actual plugin components being packaged, the package must declare
 itself as a plugin package, to support dynamic discovery. This is done
-in the Application manifest, by using standard Intent filters.
+in the application manifest, `AndroidManifest.xml`, with Intent filters.
 
 Each plugin package must define an Activity in its manifest, with an
 Intent filter containing the `org.andraudio.plugin.action.DISCOVER`
@@ -147,7 +147,7 @@ String getApplicationLibraryDir(ApplicationInfo application) {
 
 In the above example, parsing the metadata is left aside.
 This is specific to the plugin technology (LV2 here). Certain technologies
-do not rely on any metadata file (eg: VST), and the host needs to link
+do not rely on any metadata file (eg: VST 2.x), and the host needs to link
 the shared object to inspect the plugin.
 
 Such dynamic linking, for either inspection or execution purpose, is
@@ -176,11 +176,11 @@ Here are the currently supported plugin technologies.
  * Intent filter category: `org.andraudio.plugin.category.LADSPA`
  * Metadata asset folder: `org.andraudio.plugin/ladspa/metadata/`
 
-=== VST ===
+=== VST 2.x ===
 
  * Information: http://ygrabit.steinberg.de/ 
- * Intent filter category: `org.andraudio.plugin.category.VST`
- * _Warning: the feasibility of native Android VST plugins needs confirmation (native Linux VST plugins are possible)_
+ * Intent filter category: `org.andraudio.plugin.category.VST2`
+ * _Warning: the feasibility of native Android VST plugins needs confirmation (native Linux VST2 plugins are possible)_
 
 === VAMP ===
 
