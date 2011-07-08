@@ -111,7 +111,8 @@ namespace Details
 	void m_inc_write() {
 	    // PRECONDITION: m_mutex must be locked
 	    ++m_write;
-	    if(m_write >= m_queue.size()) {
+	    assert(m_write > 0);
+	    if(unsigned(m_write) >= m_queue.size()) {
 		m_write = 0;
 	    }
 	}
@@ -119,7 +120,8 @@ namespace Details
 	void m_inc_read() {
 	    // PRECONDITION: m_mutex must be locked
 	    ++m_read;
-	    if(m_read >= m_queue.size()) {
+	    assert(m_read > 0);
+	    if(unsigned(m_read) >= m_queue.size()) {
 		m_read = 0;
 	    }
 	}
