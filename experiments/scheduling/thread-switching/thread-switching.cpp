@@ -12,6 +12,17 @@
  * Build instructions:
  *   $ g++ -o thread-switching thread-switching.cpp -lpthread
  *   $ ./thread-switching
+ *
+ * Test methodology:
+ *   - Master thread (main()) spawns several child
+ *     threads (Details::Thread).
+ *   - The threads signal run/return using POSIX
+ *     semaphores (sem_t).
+ *   - Each thread simply grabs the current time
+ *     and puts a message on the logger queue
+ *     (Details::Message, Details::Logger).
+ *   - At the end, the logger queue is emptied
+ *     and statistics are calculated.
  */
 
 #include <pthread.h>
