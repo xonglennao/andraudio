@@ -26,7 +26,7 @@ This basic feature set could be included in an initial release of the !NoiseLab 
 
  * Look good, be user-friendly and useful for users who want to learn more about their system
  * collect general system info such as the Android version, build, etc.. as found in [http://developer.android.com/reference/android/os/Build.html Android.os.Build]
- * collect and display characteristics of Java APIs, !AudioTrack and !AudioRecord: 
+ * collect and display characteristics of Java APIs, [http://developer.android.com/reference/android/media/AudioTrack.html AudioTrack] and [http://developer.android.com/reference/android/media/AudioRecord.html AudioRecord]: 
    * supported samplerates, 
    * supported channels according to samplerate
    * supported bit depth according to samplerate and channels
