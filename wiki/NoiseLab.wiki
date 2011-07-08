@@ -47,3 +47,4 @@ Some of these features could be implemented in subsequent releases.
  * measure and graph read/write/callback scheduling jitter for actual audio i/o 
  * measure and graph best-case scheduling jitter for a best effort media thread 
  * maybe collect supported video capture and playback formats 
+ * instruct the user to perform the tests with the USB charger plugged in and plugged out
