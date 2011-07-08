@@ -1,0 +1,49 @@
+#summary Audio system diagnosis and statistics
+
+= !NoiseLab =
+
+!NoiseLab is a project for audio system diagnosis and statistics. It is comprised of two parts:
+
+*The !NoiseLab app*:
+this is an application which would be distributed
+on the Android Market and by direct download from this website. It
+would allow the user to learn more about the audio characteristics
+of his device. This app would also automatically send the collected
+(anonymous) data to the !NoiseLab Server, for statistical purposes.
+
+*The !NoiseLab Server*:
+this server-side application would receive
+the data sent by the !NoiseLab clients, store in a database, and
+produce a variety of statistical reports. It could for example
+be written in Python and deployed on 
+[http://code.google.com/appengine/ Google's App Engine].
+
+= Planned features =
+
+== Basic features ==
+
+This basic feature set could be included in an initial release of the !NoiseLab client.
+
+ * Look good, be user-friendly and useful for users who want to learn more about their system
+ * collect general system info such as the Android version, build, etc.. as found in [http://developer.android.com/reference/android/os/Build.html Android.os.Build]
+ * collect and display characteristics of Java APIs, !AudioTrack and !AudioRecord: 
+   * supported samplerates, 
+   * supported channels according to samplerate
+   * supported bit depth according to samplerate and channels
+   * minimum buffer sizes according to samplerate, channels and depth
+ * collect and display characteristics of the native OpenSL APIs (what exactly?)
+ * send collected data to the !NoiseLab server together with an anonymized device ID to take duplicate reports into account
+
+== Advanced features ==
+
+Some of these features could be implemented in subsequent releases.
+
+ * check for ALSA by analyzing the symbols used by libaudio (using nm or similar)
+ * collect all symbols used and exposed by libaudio
+ * check for the presence of ALSA or OSS devices in /dev
+ * automatic audio quality test using a correlation algorithm applied on a roundtrip in/out audio stream
+ * measure in/out roundtrip latency
+ * collect list of other running apps, to see if certain problems are related to some conflicts with other apps
+ * measure and graph read/write/callback scheduling jitter for actual audio i/o 
+ * measure and graph best-case scheduling jitter for a best effort media thread 
+ * maybe collect supported video capture and playback formats 
