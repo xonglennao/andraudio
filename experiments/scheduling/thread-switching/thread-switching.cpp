@@ -155,7 +155,7 @@ namespace Details
     class Thread
     {
     public:
-	Thread() : m_logger(0), m_id(-1) {
+	Thread() : m_logger(0), m_id(-1), m_sync(0), m_shutdown(false) {
 	    sem_init(&m_return, 0, 0);
 	}
 	~Thread() {}
@@ -167,12 +167,16 @@ namespace Details
 	    m_logger = log;
 	    m_id = id;
 	    m_sync = sync;
+	    m_shutdown = false;
 	    pthread_create(&m_thread, 0, Thread::static_main, this);
 	    return &m_return;
 	}
 
 	void cancel() {
-	    pthread_cancel(m_thread);
+	    m_shutdown = true;
+	    if(m_sync) {
+		sem_post(m_sync);
+	    }
 	}
 
 	void join() {
@@ -189,9 +193,13 @@ namespace Details
 	    Message m;
 	    m.thread = m_id;
 	    while(0 == sem_wait(m_sync)) {
+		if(m_shutdown)
+		    break;
 		gettimeofday(&m.time, 0);
 		m_logger->push(m);
 		sem_post(&m_return);
+		if(m_shutdown)
+		    break;
 	    }
 	    return 0;
 	}
@@ -202,6 +210,7 @@ namespace Details
 	sem_t *m_sync;
 	sem_t m_return;
 	pthread_t m_thread;
+	volatile bool m_shutdown;
     };
 
     static void output_message(const Message& m, const timeval& t_zero)
