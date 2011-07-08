@@ -8,6 +8,10 @@
  *
  * Application to test the speed in switching between
  * N threads controlled by a master thread (main).
+ *
+ * Build instructions:
+ *   $ g++ -o thread-switching thread-switching.cpp -lpthread
+ *   $ ./thread-switching
  */
 
 #include <pthread.h>
