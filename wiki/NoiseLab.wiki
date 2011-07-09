@@ -18,7 +18,7 @@ produce a variety of statistical reports. It could for example
 be written in Python and deployed on 
 [http://code.google.com/appengine/ Google's App Engine].
 
-NoiseLab is a free software project. The code shall be placed under the New BSD license and the statistics made publicly available.
+!NoiseLab is a free software project. The code shall be placed under the [http://www.opensource.org/licenses/bsd-license.php New BSD license] and the statistics made publicly available.
 
 = Planned features =
 
