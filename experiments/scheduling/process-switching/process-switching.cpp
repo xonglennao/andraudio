@@ -3,19 +3,19 @@
  *    Gabriel M. Beddingfield <gabrbedd@gmail.com>
  */
 
-/* thread-switching.cpp
+/* process-switching.cpp
  * 2011-07-08
  *
  * Application to test the speed in switching between
- * N threads controlled by a master thread (main).
+ * N process controlled by a master process (main).
  *
  * Build instructions:
- *   $ g++ -o thread-switching thread-switching.cpp -lpthread
+ *   $ g++ -o process-switching process-switching.cpp -lpthread -lrt
  *   $ ./thread-switching
  *
  * Test methodology:
- *   - Master thread (main()) spawns several child
- *     threads (Details::Thread).
+ *   - Master process (no args) spawns several child
+ *     processes (same program with hook to shm).
  *   - The threads signal run/return using POSIX
  *     semaphores (sem_t).
  *   - Each thread simply grabs the current time
@@ -32,8 +32,15 @@
 #include <vector>
 #include <iostream>
 #include <cassert>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <cstdio>
+#include <cstdlib>
 
 using namespace std;
+
+#define SHM_NAME "/process-switching"
 
 namespace Details
 {
@@ -41,6 +48,14 @@ namespace Details
     {
 	uint8_t thread;
 	timeval time;
+    };
+
+    struct Sync
+    {
+	sem_t run;
+	sem_t ret;
+	volatile bool kill;
+	Message m;
     };
 
     double usec_avg_sum;
@@ -152,67 +167,6 @@ namespace Details
 	std::vector<Message> m_queue;
     }; // class Logger
 
-    class Thread
-    {
-    public:
-	Thread() : m_logger(0), m_id(-1), m_sync(0), m_shutdown(false) {
-	    sem_init(&m_return, 0, 0);
-	}
-	~Thread() {}
-
-	/* Returns a wait condition to signal that we're done with the
-	 * current run cycle
-	 */
-	sem_t* start(Logger *log, uint8_t id, sem_t *sync) {
-	    m_logger = log;
-	    m_id = id;
-	    m_sync = sync;
-	    m_shutdown = false;
-	    pthread_create(&m_thread, 0, Thread::static_main, this);
-	    return &m_return;
-	}
-
-	void cancel() {
-	    m_shutdown = true;
-	    if(m_sync) {
-		sem_post(m_sync);
-	    }
-	}
-
-	void join() {
-	    pthread_join(m_thread, 0);
-	}
-
-    private:
-	static void* static_main(void* arg) {
-	    Thread *that = static_cast<Thread*>(arg);
-	    return that->main();
-	}
-
-	void* main() {
-	    Message m;
-	    m.thread = m_id;
-	    while(0 == sem_wait(m_sync)) {
-		if(m_shutdown)
-		    break;
-		gettimeofday(&m.time, 0);
-		m_logger->push(m);
-		sem_post(&m_return);
-		if(m_shutdown)
-		    break;
-	    }
-	    return 0;
-	}
-
-    private:
-	Logger *m_logger;
-	int8_t m_id;
-	sem_t *m_sync;
-	sem_t m_return;
-	pthread_t m_thread;
-	volatile bool m_shutdown;
-    };
-
     static void output_message(const Message& m, const timeval& t_zero)
     {
 	unsigned long usecs, dt;
@@ -221,7 +175,7 @@ namespace Details
 	dt = usecs - last;
 	++usec_avg_count;
 	usec_avg_sum += dt;
-	cout << "thread=" << int(m.thread)
+	cout << "proc=" << int(m.thread)
 	     << " time=" << usecs
 	     << " dt=" << dt << endl;
 	last = usecs;
@@ -231,21 +185,48 @@ namespace Details
 
 int main(int argc, char* argv[])
 {
-    const int NTHREADS = 32;
+    const int NPROCS = 32;
     const int NCYCLES = 64;
     const unsigned MAXMSG = 4096;
     Details::Logger log(MAXMSG+1);
-    Details::Thread threads[NTHREADS];
-    sem_t* returns[NTHREADS];
-    sem_t  runs[NTHREADS];
+    Details::Sync *proc_sync;
+    Details::Sync *client_sync;
+    pid_t procs[NPROCS];
+    void *shm_mem;
     timeval t_zero;
     int k,j;
 
-    assert( NTHREADS*NCYCLES < MAXMSG );
+    assert( NPROCS*NCYCLES < MAXMSG );
 
-    for(k=0 ; k<NTHREADS ; ++k) {
-	sem_init(&runs[k], 0, 0);
-	returns[k] = threads[k].start(&log, k, &runs[k]);
+    // Prepares shared memory
+    shm_mem = mmap(0, NPROCS * sizeof(Details::Sync), PROT_READ|PROT_WRITE, MAP_SHARED|MAP_ANONYMOUS, -1, 0);
+    assert(shm_mem != MAP_FAILED);
+    proc_sync = static_cast<Details::Sync*>(shm_mem);
+    client_sync = proc_sync;
+
+    // Prepare semaphores and such.
+    for(k=0 ; k<NPROCS ; ++k) {
+	sem_init( &(proc_sync[k].run), 1, 0 );
+	sem_init( &(proc_sync[k].ret), 1, 0 );
+	proc_sync[k].m.thread = k;
+	proc_sync[k].kill = false;
+    }
+
+    // Spawn other processes
+    for(k=0 ; k<NPROCS ; ++k) {
+	procs[k] = fork();
+	if(procs[k] == 0) {
+	    Details::Sync& s = proc_sync[k];
+	    // Client loop
+	    while(0 == sem_wait(&s.run)) {
+		if(s.kill)
+		    exit(0);
+		gettimeofday(&s.m.time, 0);
+		sem_post(&s.ret);
+		if(s.kill)
+		    exit(0);
+	    }
+	}
     }
 
     Details::Message m;
@@ -254,18 +235,19 @@ int main(int argc, char* argv[])
     Details::usec_avg_count = 0;
     gettimeofday(&t_zero, 0);
     for(j=0 ; j<NCYCLES ; ++j) {
-	for(k=0 ; k<NTHREADS ; ++k) {
-	    sem_post(&runs[k]);
-	    sem_wait(returns[k]);
+	for(k=0 ; k<NPROCS ; ++k) {
+	    sem_post(&proc_sync[k].run);
+	    sem_wait(&proc_sync[k].ret);
+	    log.push(proc_sync[k].m);
 	}
     }
 
-    for(k=0 ; k<NTHREADS ; ++k) {
-	threads[k].cancel();
+    for(k=0 ; k<NPROCS ; ++k) {
+	proc_sync[k].kill = true;
+	sem_post(&proc_sync[k].run);
     }
-    for(k=0 ; k<NTHREADS ; ++k) {
-	threads[k].join();
-    }
+
+    sleep(1);
 
     while( log.pop(m) ) {
 	output_message(m, t_zero);
@@ -279,3 +261,4 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+

@@ -1,4 +1,4 @@
-CXXFLAGS = -g -O0 -Wall -lpthread
+CXXFLAGS = -g -O0 -Wall -lpthread -lrt
 
 all: process-switching
 
