@@ -1,4 +1,11 @@
-CXXFLAGS = -g -O0 -Wall -lpthread -lrt
+ANDROID := $(if $(shell echo '__ANDROID__' | $(CXX) -E - | grep __ANDROID__),,1)
+CXXFLAGS = -g -O0 -Wall
+
+ifdef ANDROID
+CXXFLAGS += -lstdc++
+else
+CXXFLAGS += -lpthread -lrt
+endif
 
 all: process-switching
 
