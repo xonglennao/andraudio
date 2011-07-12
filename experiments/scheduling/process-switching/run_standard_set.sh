@@ -5,9 +5,9 @@ if [ ! -x ./process-switching ] ; then
     exit
 fi
 
-for N in 8 64 ; do
+for N in 8 16 32 64 ; do
     for I in 20000 40000 60000 ; do
-        for D in 10 60 ; do
+        for D in 3 30 300 ; do
             ./process-switching $N $I $D
         done
     done
