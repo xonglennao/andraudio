@@ -36,6 +36,7 @@
 #include <fcntl.h>
 #include <cstdio>
 #include <cstdlib>
+#include <cmath>
 
 using namespace std;
 
@@ -87,74 +88,90 @@ namespace Details
     class Stats
     {
     public:
+        unsigned long N;
+        double sum_x;
+        double sum_x2;
+        double max;
+        double min;
+
         Stats() { reset(); }
-        ~Stats() {}
+
+        void reset() {
+            N = 0;
+            sum_x = sum_x2 = max = min = 0.0;
+        }
+
+        void insert(double x) {
+            ++N;
+            sum_x += x;
+            sum_x2 += x*x;
+            if(x > max) max = x;
+            if(x < min) min = x;
+        }
+
+        double average() {
+            if(N == 0) return 0;
+            return sum_x / double(N);
+        }
+
+        double stddev() {
+            if(N == 0) return 0;
+            double avg = average();
+            return ::sqrt( sum_x2/double(N) - avg*avg );
+        }
+
+    }; // class Stats
+
+    class RunStats
+    {
+    public:
+        RunStats() { reset(); }
+        ~RunStats() {}
 
         void new_cycle(const timeval& expected) {
             timeval now;
             double dt;
             gettimeofday(&now, 0);
-            ++N_cycles;
             dt = calc_dt_double(expected, now);
-            sum_cycle_dt += dt;
-            if(dt > max_cycle_dt)
-                max_cycle_dt = dt;
-            if(dt < min_cycle_dt)
-                min_cycle_dt = dt;
+            m_cycle.insert(dt);
             m_last_time = now;
         }
 
         void update(const Message m) {
             double dt;
-            ++N_dt;
             dt = calc_dt_double(m_last_time, m.time);
             assert(dt >= 0.0);
-            sum_dt += dt;
-            if(dt > max_dt)
-                max_dt = dt;
-            if(dt < min_dt)
-                min_dt = dt;
+            m_thread.insert(dt);
         }
 
         void report() {
-            double cycle_accuracy = sum_cycle_dt / N_cycles;
-            double switch_speed = sum_dt / N_dt;
-            cout << "Cycle scheduling happened (avg) within "
-                 << cycle_accuracy << " usecs of the appointed time."
-                 << endl
-                 << "max/min = " << max_cycle_dt << "/" << min_cycle_dt
+            cout << "Cycle scheduling:"
+                 << " avg=" << m_cycle.average()
+                 << " stddev=" << m_cycle.stddev()
+                 << " max=" << m_cycle.max
+                 << " min=" << m_cycle.min
+                 << " (usecs)"
                  << endl;
-            cout << "Thread switching speed was avg "
-                 << switch_speed << " usecs"
-                 << endl
-                 << "max/min = " << max_dt << "/" << min_dt
+            cout << "Thread switching:"
+                 << " avg=" << m_thread.average()
+                 << " stddev=" << m_cycle.stddev()
+                 << " max=" << m_cycle.max
+                 << " min=" << m_cycle.min
+                 << " (usecs)"
                  << endl;
         }
 
         void reset() {
-            N_cycles = 0;
-            sum_cycle_dt = 0.0;
-            max_cycle_dt = 0.0;
-            min_cycle_dt = 0.0;
+            m_cycle.reset();
+            m_thread.reset();
             m_last_time.tv_sec = 0; m_last_time.tv_usec = 0;
-            N_dt = 0;
-            sum_dt = 0.0;
-            max_dt = 0.0;
-            min_dt = 0.0;
         }
 
     private:
-        unsigned long N_cycles;
-        double sum_cycle_dt;
-        double max_cycle_dt;
-        double min_cycle_dt;
+        Stats m_cycle;
+        Stats m_thread;
         timeval m_last_time;
-        unsigned long N_dt;
-        double sum_dt;
-        double max_dt;
-        double min_dt;
-
-    }; // class Stats
+    }; // class RunStats
 
 } // namespace Details
 
@@ -183,9 +200,9 @@ int main(int argc, char* argv[])
 
     cout << argv[0] << " " << argv[1] << " " << argv[2] << " "
          << argv[3] << " =================================" << endl;
-    cout << "Running with:" << endl
-         << NPROCS << " processes" << endl
-         << NCYCLES << " cycles" << endl
+    cout << "Running with: "
+         << NPROCS << " processes, "
+         << NCYCLES << " cycles, "
          << RUN_INTERVAL << " usec/cycle" << endl;
     cout << "This test should take about " << (double(RUN_INTERVAL)*double(NCYCLES)/1000000.0) << " secs" << endl;
 
@@ -223,7 +240,7 @@ int main(int argc, char* argv[])
     unsigned long interval;
     long balance; //usecs
     timeval t_zero, t_next, t_now;
-    Details::Stats stats;
+    Details::RunStats stats;
 
     interval = RUN_INTERVAL;
     gettimeofday(&t_zero, 0);
