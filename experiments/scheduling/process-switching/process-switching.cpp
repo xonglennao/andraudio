@@ -137,6 +137,15 @@ namespace Details
             dt = calc_dt_double(expected, now);
             m_cycle.insert(dt);
             m_last_time = now;
+            m_start_cycle = now;
+        }
+
+        void end_cycle() {
+            timeval now;
+            double dt;
+            gettimeofday(&now, 0);
+            dt = calc_dt_double(m_start_cycle, now);
+            m_run.insert(dt);
         }
 
         void update(const Message m) {
@@ -147,7 +156,9 @@ namespace Details
         }
 
         void report() {
-            cerr << "# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min "
+            cerr << "# nproc interval ncycles secs "
+                 << "cyc_avg cyc_stddev cyc_max cyc_min "
+                 << "run_avg run_stddev run_max run_min "
                  << "thd_avg thd_stddev thd_max thd_min" << endl;
             cerr << m_nprocs
                  << " " << m_interval
@@ -157,6 +168,10 @@ namespace Details
                  << " " << m_cycle.stddev()
                  << " " << m_cycle.max
                  << " " << m_cycle.min
+                 << " " << m_run.average()
+                 << " " << m_run.stddev()
+                 << " " << m_run.max
+                 << " " << m_run.min
                  << " " << m_thread.average()
                  << " " << m_thread.stddev()
                  << " " << m_thread.max
@@ -167,6 +182,13 @@ namespace Details
                  << " stddev=" << m_cycle.stddev()
                  << " max=" << m_cycle.max
                  << " min=" << m_cycle.min
+                 << " (usecs)"
+                 << endl;
+            cout << "Cycle run time:"
+                 << " avg=" << m_run.average()
+                 << " stddev=" << m_run.stddev()
+                 << " max=" << m_run.max
+                 << " min=" << m_run.min
                  << " (usecs)"
                  << endl;
             cout << "Thread switching:"
@@ -194,7 +216,9 @@ namespace Details
     private:
         Stats m_cycle;
         Stats m_thread;
+        Stats m_run;
         timeval m_last_time;
+        timeval m_start_cycle;
         // Meta:
         int m_nprocs;
         unsigned long m_interval;
@@ -282,6 +306,7 @@ int main(int argc, char* argv[])
             sem_wait(&proc_sync[k].ret);
             stats.update(proc_sync[k].m);
         }
+        stats.end_cycle();
         t_next.tv_usec += interval;
         if(t_next.tv_usec > 100000) {
             t_next.tv_sec += 1;
