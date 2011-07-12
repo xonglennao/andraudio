@@ -39,9 +39,6 @@
 
 using namespace std;
 
-#define SHM_NAME "/process-switching"
-#define RUN_INTERVAL 40000
-
 namespace Details
 {
     struct Message
@@ -163,14 +160,29 @@ namespace Details
 
 int main(int argc, char* argv[])
 {
-    const int NPROCS = 32;
-    const int NCYCLES = (1L << 10);
+    int NPROCS = 32;
+    int NCYCLES;
+    int DURATION = 30;
+    long RUN_INTERVAL = 40000;
     Details::Sync *proc_sync;
     Details::Sync *client_sync;
     pid_t procs[NPROCS];
     void *shm_mem;
     int k,j;
 
+    if(argc != 4) {
+        assert(argc > 0);
+        cout << "Usage: " << argv[0] << " <num_processes> <cycle_interval_usecs> <test_duration_secs>" << endl;
+        exit(0);
+    }
+
+    NPROCS = atoi(argv[1]);
+    RUN_INTERVAL = atol(argv[2]);
+    DURATION = atoi(argv[3]);
+    NCYCLES = double(DURATION) * 1000000.0 / double(RUN_INTERVAL) + 0.5;
+
+    cout << argv[0] << " " << argv[1] << " " << argv[2] << " "
+         << argv[3] << " =================================" << endl;
     cout << "Running with:" << endl
          << NPROCS << " processes" << endl
          << NCYCLES << " cycles" << endl
