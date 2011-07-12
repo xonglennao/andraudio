@@ -107,6 +107,9 @@ namespace Details
             sum_x2 += x*x;
             if(x > max) max = x;
             if(x < min) min = x;
+            if(N == 1) {
+                max = min = x;
+            }
         }
 
         double average() {
@@ -145,6 +148,21 @@ namespace Details
         }
 
         void report() {
+            cerr << "# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min "
+                 << "thd_avg thd_stddev thd_max thd_min" << endl;
+            cerr << m_nprocs
+                 << " " << m_interval
+                 << " " << m_n_cycles
+                 << " " << m_secs
+                 << " " << m_cycle.average()
+                 << " " << m_cycle.stddev()
+                 << " " << m_cycle.max
+                 << " " << m_cycle.min
+                 << " " << m_thread.average()
+                 << " " << m_thread.stddev()
+                 << " " << m_thread.max
+                 << " " << m_thread.min
+                 << endl;
             cout << "Cycle scheduling:"
                  << " avg=" << m_cycle.average()
                  << " stddev=" << m_cycle.stddev()
@@ -167,10 +185,22 @@ namespace Details
             m_last_time.tv_sec = 0; m_last_time.tv_usec = 0;
         }
 
+        void set_meta(int nprocs, unsigned long interval, unsigned long ncycles, double secs) {
+            m_nprocs = nprocs;
+            m_interval = interval;
+            m_n_cycles = ncycles;
+            m_secs = secs;
+        }
+
     private:
         Stats m_cycle;
         Stats m_thread;
         timeval m_last_time;
+        // Meta:
+        int m_nprocs;
+        unsigned long m_interval;
+        unsigned long m_n_cycles;
+        double m_secs;
     }; // class RunStats
 
 } // namespace Details
@@ -245,6 +275,7 @@ int main(int argc, char* argv[])
     interval = RUN_INTERVAL;
     gettimeofday(&t_zero, 0);
     t_next = t_zero;
+    stats.set_meta(NPROCS, RUN_INTERVAL, NCYCLES, DURATION);
     for(j=0 ; j<NCYCLES ; ++j) {
         stats.new_cycle(t_next);
         for(k=0 ; k<NPROCS ; ++k) {
