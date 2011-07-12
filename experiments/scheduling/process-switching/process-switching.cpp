@@ -154,9 +154,9 @@ namespace Details
                  << endl;
             cout << "Thread switching:"
                  << " avg=" << m_thread.average()
-                 << " stddev=" << m_cycle.stddev()
-                 << " max=" << m_cycle.max
-                 << " min=" << m_cycle.min
+                 << " stddev=" << m_thread.stddev()
+                 << " max=" << m_thread.max
+                 << " min=" << m_thread.min
                  << " (usecs)"
                  << endl;
         }
