@@ -153,6 +153,7 @@ namespace Details
             dt = calc_dt_double(m_last_time, m.time);
             assert(dt >= 0.0);
             m_thread.insert(dt);
+            m_last_time = m.time;
         }
 
         void report() {
