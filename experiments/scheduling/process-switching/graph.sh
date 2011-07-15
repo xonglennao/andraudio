@@ -15,9 +15,9 @@ set output "$PNG"
 set key left top
 set key box linestyle 1
 set xlabel "Number of processes"
-set ylabel "Microseconds"
-plot '$DATA' using 1:9 title "cycle time", \
-     '$DATA' using 1:13 title "thread switch time", \
-     '$DATA' using 1:(\$9+3*\$10) title "cycle max", \
-     '$DATA' using 1:(\$13+3*\$14) title "thread switch max"
+set ylabel "Milliseconds"
+plot '$DATA' using 1:(\$9/1000) title "cycle time", \
+     '$DATA' using 1:(\$13/1000) title "thread switch time", \
+     '$DATA' using 1:((\$9+3*\$10)/1000) title "cycle max", \
+     '$DATA' using 1:((\$13+3*\$14)/1000) title "thread switch max"
 EOF
