@@ -1,0 +1,72 @@
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+8 20000 150 3 13.8867 4.27479 47 -22 435.807 38.1038 806 175 51.6758 9.01115 109 19
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+8 20000 1500 30 -6.35667 21.2714 590 -39 436.517 25.8823 743 109 51.5543 8.41739 143 11
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+8 20000 15000 300 0.283933 41.1094 3989 -92 419.514 100.571 4509 62 49.1189 32.7652 4139 6
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+8 40000 75 3 0.426667 24.3864 142 -49 397.96 159.008 1132 128 47.0617 26.2458 480 13
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+8 40000 750 30 3.36 79.4039 2111 -78 403.217 128.791 875 118 47.677 17.9163 364 12
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+8 40000 7500 300 0.507733 22.4882 827 -86 392.04 131.794 1456 80 46.3271 20.5265 1201 7
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+8 60000 50 3 2.48 18.6764 27 -42 416.24 144.851 773 142 49.295 22.8238 311 13
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+8 60000 500 30 1.42 19.1123 36 -96 405.044 132.688 774 122 47.6745 17.8185 222 13
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+8 60000 5000 300 2.1816 18.6929 207 -90 407.355 115.565 1345 93 48.1547 17.0456 1170 8
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+16 20000 150 3 -1.59333 1.35202 9 -4 786.267 62.4348 1544 737 47.74 7.96738 114 28
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+16 20000 1500 30 0.477333 22.6712 595 -43 782.984 44.3879 1549 202 47.4801 7.90699 159 11
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+16 20000 15000 300 13.7188 10.1566 580 -39 728.685 34.0686 1573 196 44.1654 5.63182 127 11
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+16 40000 75 3 -0.586667 4.48135 33 -4 791.573 93.9116 1594 738 48.0767 9.20756 110 29
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+16 40000 750 30 -18.336 2.51696 15 -38 780.925 32.9975 1586 615 47.4187 7.2239 138 25
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+16 40000 7500 300 -9.49213 18.8326 651 -71 734.741 76.1304 1673 166 44.5607 8.58004 1185 9
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+16 60000 50 3 0.5 25.296 137 -32 741.52 206.107 871 244 45.0513 14.7726 104 13
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+16 60000 500 30 -11.306 11.7652 12 -50 692.118 225.757 2468 231 42.0607 18.2653 727 12
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+16 60000 5000 300 1.6828 22.8967 706 -90 712.038 227.087 1857 228 43.3011 21.7268 1132 12
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+32 20000 150 3 1.24 32.468 257 -51 1290.77 556.138 5822 406 39.7263 39.0441 2400 11
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+32 20000 1500 30 -1.61933 28.9388 768 -94 1268.59 409.334 4003 293 39.0813 17.5313 743 7
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+32 20000 15000 300 -0.3602 34.2285 1451 -97 1284.9 405.256 4540 271 39.5838 19.6011 3957 7
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+32 40000 75 3 -0.786667 17.8462 21 -44 1279.61 458.778 2624 445 39.4504 23.3073 686 12
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+32 40000 750 30 -1.59067 32.1342 717 -74 1274.02 398.779 4619 440 39.2512 21.2807 1738 12
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+32 40000 7500 300 2.5448 30.5032 1467 -86 1341.55 308.844 2830 371 41.3042 14.382 1526 8
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+32 60000 50 3 -0.96 3.64395 12 -13 1448.18 272.52 3326 1296 44.5487 9.46633 188 29
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+32 60000 500 30 -4.058 27.3436 593 -22 1405.09 41.8657 2111 1092 43.1497 5.34185 95 10
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+32 60000 5000 300 9.7912 21.1037 604 -57 1426.21 60.4474 3442 378 43.7267 5.00064 195 11
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+64 20000 150 3 -3.83333 7.05163 63 -23 2793.73 227.319 5387 1904 43.3047 12.637 1185 10
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+64 20000 1500 30 6.39467 7.26885 65 -32 2761.84 60.9152 3123 761 42.8072 3.57596 167 10
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+64 20000 15000 300 13.8837 13.4011 659 -50 2734.73 98.894 6951 829 42.3795 10.8618 4120 10
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+64 40000 75 3 14.2933 2.53915 25 2 2795.69 289.788 4853 2052 43.3508 27.3642 1899 17
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+64 40000 750 30 -0.362667 6.56408 62 -40 2756.36 75.0546 3800 2147 42.7208 3.74574 266 11
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+64 40000 7500 300 11.8896 16.683 651 -59 2724.76 78.6613 6038 1043 42.2309 5.96434 2991 9
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+64 60000 50 3 -1.14 4.18096 9 -25 2807.68 137.778 3648 2592 43.5228 6.99103 371 29
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+64 60000 500 30 14.696 5.68644 79 -21 2771.04 62.2863 3044 2244 42.9488 3.1667 195 22
+# nproc interval ncycles secs cyc_avg cyc_stddev cyc_max cyc_min run_avg run_stddev run_max run_min thd_avg thd_stddev thd_max thd_min
+64 60000 5000 300 11.9492 14.3883 605 -34 2781.47 147.929 7556 758 43.11 16.9137 4835 10
