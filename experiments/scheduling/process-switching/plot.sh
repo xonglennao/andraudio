@@ -65,11 +65,16 @@ THD_SW_TIME_STDDEV=14
 # cycle max is being reported a 3*STDDEV.  Assuming that the data
 # has a normal distribution, the time will be < AVG + 3*STDDEV
 # 99.9% of the time.
+if [ -z "$PNG_MODE" ] ; then
+    echo
+    echo "Click on plot to close"
+fi
 cat <<EOF | "$GNUPLOT" -
 ${PNG_MODE:+set term png}
 ${OUTFILE:+set output '$OUTFILE'}
 set key left top
 set key box linestyle 1
+set title  "${INFILE:-Process Switching Test Results}"
 set xlabel "Number of processes"
 set ylabel "Milliseconds"
 
