@@ -1,0 +1,252 @@
+./process-switching 8 20000 3 =================================
+Running with: 8 processes, 150 cycles, 20000 usec/cycle
+This test should take about 3 secs
+Cycle scheduling: avg=-6.26667 stddev=29.36 max=346 min=-25 (usecs)
+Cycle run time: avg=1187.25 stddev=58.7021 max=1676 min=1161 (usecs)
+Thread switching: avg=137.525 stddev=37.199 max=676 min=61 (usecs)
+Exited cleanly
+./process-switching 8 20000 30 =================================
+Running with: 8 processes, 1500 cycles, 20000 usec/cycle
+This test should take about 30 secs
+Cycle scheduling: avg=7.43667 stddev=355.444 max=12784 min=-30 (usecs)
+Cycle run time: avg=1161.16 stddev=148.585 max=3812 min=1115 (usecs)
+Thread switching: avg=134.121 stddev=41.3105 max=1575 min=61 (usecs)
+Exited cleanly
+./process-switching 8 20000 300 =================================
+Running with: 8 processes, 15000 cycles, 20000 usec/cycle
+This test should take about 300 secs
+Cycle scheduling: avg=81.5187 stddev=1753.36 max=68280 min=-53 (usecs)
+Cycle run time: avg=1144.69 stddev=351.648 max=30985 min=475 (usecs)
+Thread switching: avg=132.212 stddev=113.455 max=29867 min=26 (usecs)
+Exited cleanly
+./process-switching 8 40000 3 =================================
+Running with: 8 processes, 75 cycles, 40000 usec/cycle
+This test should take about 3 secs
+Cycle scheduling: avg=4.41333 stddev=6.5688 max=13 min=-19 (usecs)
+Cycle run time: avg=1184.23 stddev=28.5057 max=1360 min=1167 (usecs)
+Thread switching: avg=137.105 stddev=32.2777 max=259 min=61 (usecs)
+Exited cleanly
+./process-switching 8 40000 30 =================================
+Running with: 8 processes, 750 cycles, 40000 usec/cycle
+This test should take about 30 secs
+Cycle scheduling: avg=3.832 stddev=14.215 max=337 min=-30 (usecs)
+Cycle run time: avg=1129.88 stddev=21.822 max=1409 min=1116 (usecs)
+Thread switching: avg=130.292 stddev=25.1016 max=418 min=61 (usecs)
+Exited cleanly
+./process-switching 8 40000 300 =================================
+Running with: 8 processes, 7500 cycles, 40000 usec/cycle
+This test should take about 300 secs
+Cycle scheduling: avg=39.1401 stddev=912.642 max=37977 min=-48 (usecs)
+Cycle run time: avg=1146.37 stddev=890.112 max=77660 min=473 (usecs)
+Thread switching: avg=132.463 stddev=314.53 max=76554 min=26 (usecs)
+Exited cleanly
+./process-switching 8 60000 3 =================================
+Running with: 8 processes, 50 cycles, 60000 usec/cycle
+This test should take about 3 secs
+Cycle scheduling: avg=3.88 stddev=12.8104 max=77 min=-18 (usecs)
+Cycle run time: avg=1136.9 stddev=20.4228 max=1259 min=1121 (usecs)
+Thread switching: avg=131.13 stddev=24.3668 max=159 min=63 (usecs)
+Exited cleanly
+./process-switching 8 60000 30 =================================
+Running with: 8 processes, 500 cycles, 60000 usec/cycle
+This test should take about 30 secs
+Cycle scheduling: avg=2.546 stddev=13.2874 max=242 min=-22 (usecs)
+Cycle run time: avg=1136.39 stddev=19.7244 max=1383 min=1121 (usecs)
+Thread switching: avg=131.038 stddev=24.8417 max=258 min=61 (usecs)
+Exited cleanly
+./process-switching 8 60000 300 =================================
+Running with: 8 processes, 5000 cycles, 60000 usec/cycle
+This test should take about 300 secs
+Cycle scheduling: avg=94.8502 stddev=2284.17 max=91081 min=-34 (usecs)
+Cycle run time: avg=1203.82 stddev=454.845 max=23773 min=1141 (usecs)
+Thread switching: avg=139.366 stddev=162.925 max=22686 min=61 (usecs)
+Exited cleanly
+./process-switching 16 20000 3 =================================
+Running with: 16 processes, 150 cycles, 20000 usec/cycle
+This test should take about 3 secs
+Cycle scheduling: avg=6.58 stddev=28.1911 max=333 min=-30 (usecs)
+Cycle run time: avg=2297.25 stddev=55.2385 max=2784 min=2275 (usecs)
+Thread switching: avg=138.03 stddev=19.9919 max=482 min=65 (usecs)
+Exited cleanly
+./process-switching 16 20000 30 =================================
+Running with: 16 processes, 1500 cycles, 20000 usec/cycle
+This test should take about 30 secs
+Cycle scheduling: avg=50.4947 stddev=877.944 max=24641 min=-29 (usecs)
+Cycle run time: avg=2287.32 stddev=100.272 max=3203 min=2260 (usecs)
+Thread switching: avg=137.407 stddev=19.4609 max=484 min=63 (usecs)
+Exited cleanly
+./process-switching 16 20000 300 =================================
+Running with: 16 processes, 15000 cycles, 20000 usec/cycle
+This test should take about 300 secs
+Cycle scheduling: avg=60.5641 stddev=1082.85 max=31390 min=-53 (usecs)
+Cycle run time: avg=2262.53 stddev=560.705 max=49150 min=960 (usecs)
+Thread switching: avg=135.913 stddev=135.129 max=46822 min=26 (usecs)
+Exited cleanly
+./process-switching 16 40000 3 =================================
+Running with: 16 processes, 75 cycles, 40000 usec/cycle
+This test should take about 3 secs
+Cycle scheduling: avg=2.56 stddev=10.7073 max=16 min=-21 (usecs)
+Cycle run time: avg=2290.72 stddev=30.395 max=2529 min=2272 (usecs)
+Thread switching: avg=137.631 stddev=17.8629 max=162 min=65 (usecs)
+Exited cleanly
+./process-switching 16 40000 30 =================================
+Running with: 16 processes, 750 cycles, 40000 usec/cycle
+This test should take about 30 secs
+Cycle scheduling: avg=2.67467 stddev=13.8662 max=287 min=-26 (usecs)
+Cycle run time: avg=2283.19 stddev=31.5174 max=2868 min=2265 (usecs)
+Thread switching: avg=137.069 stddev=18.5729 max=562 min=63 (usecs)
+Exited cleanly
+./process-switching 16 40000 300 =================================
+Running with: 16 processes, 7500 cycles, 40000 usec/cycle
+This test should take about 300 secs
+Cycle scheduling: avg=82.2636 stddev=1330.59 max=33010 min=-50 (usecs)
+Cycle run time: avg=2303.5 stddev=614.616 max=41172 min=958 (usecs)
+Thread switching: avg=138.387 stddev=148.275 max=38867 min=27 (usecs)
+Exited cleanly
+./process-switching 16 60000 3 =================================
+Running with: 16 processes, 50 cycles, 60000 usec/cycle
+This test should take about 3 secs
+Cycle scheduling: avg=-5.04 stddev=7.71482 max=15 min=-21 (usecs)
+Cycle run time: avg=2329.66 stddev=105.056 max=2817 min=2274 (usecs)
+Thread switching: avg=140.01 stddev=29.5891 max=628 min=66 (usecs)
+Exited cleanly
+./process-switching 16 60000 30 =================================
+Running with: 16 processes, 500 cycles, 60000 usec/cycle
+This test should take about 30 secs
+Cycle scheduling: avg=-2.358 stddev=25.3295 max=398 min=-27 (usecs)
+Cycle run time: avg=2380.94 stddev=106.987 max=3262 min=2317 (usecs)
+Thread switching: avg=143.261 stddev=27.4413 max=687 min=65 (usecs)
+Exited cleanly
+./process-switching 16 60000 300 =================================
+Running with: 16 processes, 5000 cycles, 60000 usec/cycle
+This test should take about 300 secs
+Cycle scheduling: avg=84.9496 stddev=1525.59 max=67724 min=-51 (usecs)
+Cycle run time: avg=2321.85 stddev=545.728 max=27761 min=955 (usecs)
+Thread switching: avg=139.558 stddev=110.306 max=20012 min=28 (usecs)
+Exited cleanly
+./process-switching 32 20000 3 =================================
+Running with: 32 processes, 150 cycles, 20000 usec/cycle
+This test should take about 3 secs
+Cycle scheduling: avg=2.64667 stddev=28.9966 max=345 min=-27 (usecs)
+Cycle run time: avg=4704.03 stddev=159.67 max=6053 min=4633 (usecs)
+Thread switching: avg=144.183 stddev=29.3825 max=1522 min=65 (usecs)
+Exited cleanly
+./process-switching 32 20000 30 =================================
+Running with: 32 processes, 1500 cycles, 20000 usec/cycle
+This test should take about 30 secs
+Cycle scheduling: avg=36.796 stddev=954.118 max=31247 min=-28 (usecs)
+Cycle run time: avg=4745.72 stddev=152.402 max=6372 min=4665 (usecs)
+Thread switching: avg=145.422 stddev=25.3159 max=848 min=65 (usecs)
+Exited cleanly
+./process-switching 32 20000 300 =================================
+Running with: 32 processes, 15000 cycles, 20000 usec/cycle
+This test should take about 300 secs
+Cycle scheduling: avg=37.8359 stddev=811.841 max=22650 min=-30 (usecs)
+Cycle run time: avg=4729.87 stddev=328.5 max=40263 min=4645 (usecs)
+Thread switching: avg=145.018 stddev=58.3913 max=35558 min=63 (usecs)
+Exited cleanly
+./process-switching 32 40000 3 =================================
+Running with: 32 processes, 75 cycles, 40000 usec/cycle
+This test should take about 3 secs
+Cycle scheduling: avg=40.4267 stddev=366.209 max=3190 min=-19 (usecs)
+Cycle run time: avg=4854.31 stddev=364.765 max=6423 min=4676 (usecs)
+Thread switching: avg=148.875 stddev=28.9556 max=657 min=66 (usecs)
+Exited cleanly
+./process-switching 32 40000 30 =================================
+Running with: 32 processes, 750 cycles, 40000 usec/cycle
+This test should take about 30 secs
+Cycle scheduling: avg=13.7227 stddev=468.65 max=12822 min=-21 (usecs)
+Cycle run time: avg=4698.09 stddev=151.684 max=6236 min=4620 (usecs)
+Thread switching: avg=143.949 stddev=24.8659 max=1660 min=66 (usecs)
+Exited cleanly
+./process-switching 32 40000 300 =================================
+Running with: 32 processes, 7500 cycles, 40000 usec/cycle
+This test should take about 300 secs
+Cycle scheduling: avg=39.6737 stddev=1069.4 max=72970 min=-48 (usecs)
+Cycle run time: avg=4720.39 stddev=1156.3 max=41218 min=4606 (usecs)
+Thread switching: avg=144.736 stddev=194.274 max=36456 min=65 (usecs)
+Exited cleanly
+./process-switching 32 60000 3 =================================
+Running with: 32 processes, 50 cycles, 60000 usec/cycle
+This test should take about 3 secs
+Cycle scheduling: avg=15.62 stddev=59.968 max=430 min=-15 (usecs)
+Cycle run time: avg=4680.46 stddev=144.345 max=5579 min=4627 (usecs)
+Thread switching: avg=143.454 stddev=19.3806 max=595 min=68 (usecs)
+Exited cleanly
+./process-switching 32 60000 30 =================================
+Running with: 32 processes, 500 cycles, 60000 usec/cycle
+This test should take about 30 secs
+Cycle scheduling: avg=26.816 stddev=431.201 max=9657 min=-32 (usecs)
+Cycle run time: avg=4735.54 stddev=1638.66 max=41078 min=4602 (usecs)
+Thread switching: avg=145.145 stddev=287.962 max=36517 min=63 (usecs)
+Exited cleanly
+./process-switching 32 60000 300 =================================
+Running with: 32 processes, 5000 cycles, 60000 usec/cycle
+This test should take about 300 secs
+Cycle scheduling: avg=58.3492 stddev=1127.23 max=40857 min=-29 (usecs)
+Cycle run time: avg=4773.01 stddev=964.76 max=43668 min=4674 (usecs)
+Thread switching: avg=146.378 stddev=155.543 max=38948 min=63 (usecs)
+Exited cleanly
+./process-switching 64 20000 3 =================================
+Running with: 64 processes, 150 cycles, 20000 usec/cycle
+This test should take about 3 secs
+Cycle scheduling: avg=141.82 stddev=1116.9 max=11585 min=-20 (usecs)
+Cycle run time: avg=9802.25 stddev=1652.57 max=27359 min=9482 (usecs)
+Thread switching: avg=151.749 stddev=210.758 max=18041 min=68 (usecs)
+Exited cleanly
+./process-switching 64 20000 30 =================================
+Running with: 64 processes, 1500 cycles, 20000 usec/cycle
+This test should take about 30 secs
+Cycle scheduling: avg=219.609 stddev=2451.08 max=49864 min=-45 (usecs)
+Cycle run time: avg=9425.6 stddev=1808.29 max=52682 min=4228 (usecs)
+Thread switching: avg=145.439 stddev=128.667 max=22602 min=32 (usecs)
+Exited cleanly
+./process-switching 64 20000 300 =================================
+Running with: 64 processes, 15000 cycles, 20000 usec/cycle
+This test should take about 300 secs
+Cycle scheduling: avg=328.166 stddev=4172.94 max=115532 min=-212 (usecs)
+Cycle run time: avg=9587.87 stddev=1706.33 max=96876 min=9448 (usecs)
+Thread switching: avg=148.418 stddev=209.613 max=87415 min=65 (usecs)
+Exited cleanly
+./process-switching 64 40000 3 =================================
+Running with: 64 processes, 75 cycles, 40000 usec/cycle
+This test should take about 3 secs
+Cycle scheduling: avg=12.76 stddev=12.4856 max=27 min=-15 (usecs)
+Cycle run time: avg=9548.81 stddev=153.015 max=10388 min=9476 (usecs)
+Thread switching: avg=147.785 stddev=18.0535 max=595 min=68 (usecs)
+Exited cleanly
+./process-switching 64 40000 30 =================================
+Running with: 64 processes, 750 cycles, 40000 usec/cycle
+This test should take about 30 secs
+Cycle scheduling: avg=156.696 stddev=1751.45 max=33901 min=-32 (usecs)
+Cycle run time: avg=9837.66 stddev=2514.69 max=45531 min=9484 (usecs)
+Thread switching: avg=151.553 stddev=237.92 max=31710 min=68 (usecs)
+Exited cleanly
+./process-switching 64 40000 300 =================================
+Running with: 64 processes, 7500 cycles, 40000 usec/cycle
+This test should take about 300 secs
+Cycle scheduling: avg=485.577 stddev=9866.99 max=373165 min=-48 (usecs)
+Cycle run time: avg=9589.7 stddev=3637.17 max=279485 min=4200 (usecs)
+Thread switching: avg=148.429 stddev=450.501 max=274228 min=31 (usecs)
+Exited cleanly
+./process-switching 64 60000 3 =================================
+Running with: 64 processes, 50 cycles, 60000 usec/cycle
+This test should take about 3 secs
+Cycle scheduling: avg=17.46 stddev=47.7289 max=343 min=-17 (usecs)
+Cycle run time: avg=9596.68 stddev=190.383 max=10479 min=9505 (usecs)
+Thread switching: avg=148.529 stddev=18.8135 max=543 min=70 (usecs)
+Exited cleanly
+./process-switching 64 60000 30 =================================
+Running with: 64 processes, 500 cycles, 60000 usec/cycle
+This test should take about 30 secs
+Cycle scheduling: avg=52.852 stddev=782.416 max=16992 min=-13 (usecs)
+Cycle run time: avg=9617.85 stddev=249.752 max=12203 min=9535 (usecs)
+Thread switching: avg=148.833 stddev=15.9816 max=665 min=68 (usecs)
+Exited cleanly
+./process-switching 64 60000 300 =================================
+Running with: 64 processes, 5000 cycles, 60000 usec/cycle
+This test should take about 300 secs
+Cycle scheduling: avg=42.7176 stddev=830.055 max=34837 min=-43 (usecs)
+Cycle run time: avg=9603.16 stddev=582.27 max=38491 min=4245 (usecs)
+Thread switching: avg=148.613 stddev=49.2672 max=22566 min=33 (usecs)
+Exited cleanly
