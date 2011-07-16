@@ -70,10 +70,13 @@ ${PNG_MODE:+set term png}
 ${OUTFILE:+set output '$OUTFILE'}
 set key left top
 set key box linestyle 1
-plot '$INFILE' using ${NTHREADS}:${CYC_TIME} title "cycle time", \
-     '$INFILE' using ${NTHREADS}:${THD_SW_TIME} title "thread switch time", \
-     '$INFILE' using ${NTHREADS}:(\$${CYC_TIME}+3*\$${CYC_TIME_STDDEV}) title "cycle max", \
-     '$INFILE' using ${NTHREADS}:(\$${THD_SW_TIME}+3*\$${THD_SW_TIME_STDDEV}) title "thread switch max"
+set xlabel "Number of processes"
+set ylabel "Milliseconds"
+
+plot '$INFILE' using ${NTHREADS}:(${CYC_TIME}/1000) title "cycle time", \
+     '$INFILE' using ${NTHREADS}:(${THD_SW_TIME}/1000) title "thread switch time", \
+     '$INFILE' using ${NTHREADS}:((\$${CYC_TIME}+3*\$${CYC_TIME_STDDEV})/1000) title "cycle max", \
+     '$INFILE' using ${NTHREADS}:((\$${THD_SW_TIME}+3*\$${THD_SW_TIME_STDDEV})/1000) title "thread switch max"
 ${PAUSE_AT_END:+pause mouse}
 
 EOF
